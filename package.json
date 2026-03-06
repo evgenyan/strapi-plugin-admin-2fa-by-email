@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-admin-2fa-by-email",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Two-factor email authentication for Strapi 5 admin panel",
   "license": "MIT",
   "author": {
