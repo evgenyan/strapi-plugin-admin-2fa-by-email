@@ -25,7 +25,7 @@ function showVerificationModal({
 }: ShowModalOptions): Promise<Response> {
   return new Promise((resolve) => {
     const container = document.createElement('div');
-    container.id = 'admin-2fa-modal';
+    container.id = 'admin-2fa-by-email-modal';
     document.body.appendChild(container);
 
     const root = createRoot(container);
@@ -77,7 +77,7 @@ function showVerificationModal({
 async function is2faEnabled(): Promise<boolean> {
   try {
     const res = await window.__originalFetch(
-      '/admin-2fa/auth/status'
+      '/admin-2fa-by-email/auth/status'
     );
     if (!res.ok) return false;
     const data = await res.json();
@@ -93,7 +93,7 @@ async function is2faEnabled(): Promise<boolean> {
  * When the user clicks "Login", Strapi's admin sends POST /admin/login.
  * This interceptor:
  * 1. Detects calls to /admin/login (POST)
- * 2. If 2FA is enabled, sends credentials to /admin-2fa/auth/request-code instead
+ * 2. If 2FA is enabled, sends credentials to /admin-2fa-by-email/auth/request-code instead
  * 3. If the response requires verification, shows the code modal
  * 4. Returns the final token response as if it came from the original /admin/login
  */
@@ -116,7 +116,7 @@ export function interceptLoginFetch(): void {
     const isLoginRequest =
       url.includes('/admin/login') &&
       !url.includes('/admin/login-info') &&
-      !url.includes('/admin-2fa/') &&
+      !url.includes('/admin-2fa-by-email/') &&
       init?.method?.toUpperCase() === 'POST';
 
     if (!isLoginRequest) {
@@ -146,7 +146,7 @@ export function interceptLoginFetch(): void {
 
     // Request 2FA code
     const codeRes = await originalFetch(
-      '/admin-2fa/auth/request-code',
+      '/admin-2fa-by-email/auth/request-code',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -177,7 +177,7 @@ export function interceptLoginFetch(): void {
     // Build resend callback using the stored credentials
     const onResendCode = async () => {
       const res = await originalFetch(
-        '/admin-2fa/auth/resend-code',
+        '/admin-2fa-by-email/auth/resend-code',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

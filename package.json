@@ -54,8 +54,8 @@
   },
   "strapi": {
     "kind": "plugin",
-    "name": "admin-2fa",
-    "displayName": "Admin 2FA"
+    "name": "admin-2fa-by-email",
+    "displayName": "Admin 2FA by Email"
   },
   "keywords": [
     "strapi",

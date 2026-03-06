@@ -7,14 +7,14 @@ const getAdminService = (strapi: Core.Strapi, name: string) =>
 const getJwtSecret = (strapi: Core.Strapi): string => {
   const secret = strapi.config.get('admin.auth.secret') as string;
   if (!secret) {
-    throw new Error('[admin-2fa] ADMIN_JWT_SECRET is not defined');
+    throw new Error('[admin-2fa-by-email] ADMIN_JWT_SECRET is not defined');
   }
   return secret;
 };
 
 const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
   /**
-   * POST /admin/admin-2fa/auth/request-code
+   * POST /admin/admin-2fa-by-email/auth/request-code
    * Проверяет credentials и отправляет 2FA код на email
    */
   async requestCode(ctx: any) {
@@ -41,7 +41,7 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
 
     // Получаем сервис 2FA
     const twofa = strapi
-      .plugin('admin-2fa')
+      .plugin('admin-2fa-by-email')
       .service('twofa');
 
     // Генерация и отправка кода
@@ -50,7 +50,7 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
 
     // Генерация временного JWT токена
     const codeExpiration: number =
-      strapi.plugin('admin-2fa').config('codeExpiration') ?? 5;
+      strapi.plugin('admin-2fa-by-email').config('codeExpiration') ?? 5;
     const secret = getJwtSecret(strapi);
 
     const tempToken = jwt.sign(
@@ -74,7 +74,7 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   /**
-   * POST /admin/admin-2fa/auth/verify-code
+   * POST /admin/admin-2fa-by-email/auth/verify-code
    * Верифицирует 2FA код и выдаёт финальный токен сессии
    */
   async verifyCode(ctx: any) {
@@ -105,7 +105,7 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
 
     // Верификация кода
     const twofa = strapi
-      .plugin('admin-2fa')
+      .plugin('admin-2fa-by-email')
       .service('twofa');
 
     const result = await twofa.verifyCode(payload.id, code);
@@ -208,7 +208,7 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   /**
-   * POST /admin/admin-2fa/auth/resend-code
+   * POST /admin/admin-2fa-by-email/auth/resend-code
    * Повторно отправляет 2FA код, используя tempToken для идентификации пользователя
    */
   async resendCode(ctx: any) {
@@ -234,7 +234,7 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
     }
 
     const twofa = strapi
-      .plugin('admin-2fa')
+      .plugin('admin-2fa-by-email')
       .service('twofa');
 
     const code = await twofa.createCode(payload.id, payload.email);
@@ -246,12 +246,12 @@ const authController = ({ strapi }: { strapi: Core.Strapi }) => ({
   },
 
   /**
-   * GET /admin/admin-2fa/auth/status
+   * GET /admin/admin-2fa-by-email/auth/status
    * Проверяет включена ли 2FA
    */
   async getStatus(ctx: any) {
     const enabled: boolean =
-      strapi.plugin('admin-2fa').config('enabled') ?? true;
+      strapi.plugin('admin-2fa-by-email').config('enabled') ?? true;
 
     ctx.body = {
       enabled,

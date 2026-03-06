@@ -26,7 +26,7 @@ Add the plugin to your Strapi configuration in `config/plugins.ts`:
 
 ```typescript
 export default () => ({
-  'admin-2fa': {
+  'admin-2fa-by-email': {
     enabled: true,
     config: {
       codeLength: 6,

@@ -6,7 +6,7 @@ import {
 } from '../utils/email-template';
 
 const CONTENT_TYPE =
-  'plugin::admin-2fa.auth-code' as const;
+  'plugin::admin-2fa-by-email.auth-code' as const;
 
 type AuthCodeData = {
   userId?: number;
@@ -28,7 +28,7 @@ const documents = (strapi: Core.Strapi) =>
 const twofaService = ({ strapi }: { strapi: Core.Strapi }) => ({
   generateCode(): string {
     const codeLength: number =
-      strapi.plugin('admin-2fa').config('codeLength') ?? 6;
+      strapi.plugin('admin-2fa-by-email').config('codeLength') ?? 6;
     const max = Math.pow(10, codeLength);
     const code = crypto.randomInt(0, max);
     return String(code).padStart(codeLength, '0');
@@ -53,7 +53,7 @@ const twofaService = ({ strapi }: { strapi: Core.Strapi }) => ({
     // Генерируем новый код
     const code = this.generateCode();
     const codeExpiration: number =
-      strapi.plugin('admin-2fa').config('codeExpiration') ?? 5;
+      strapi.plugin('admin-2fa-by-email').config('codeExpiration') ?? 5;
     const expiresAt = new Date(
       Date.now() + codeExpiration * 60 * 1000
     ).toISOString();
@@ -77,7 +77,7 @@ const twofaService = ({ strapi }: { strapi: Core.Strapi }) => ({
     inputCode: string
   ): Promise<{ valid: boolean; error?: string }> {
     const maxAttempts: number =
-      strapi.plugin('admin-2fa').config('maxAttempts') ?? 3;
+      strapi.plugin('admin-2fa-by-email').config('maxAttempts') ?? 3;
 
     // Ищем последний неиспользованный код для userId
     const codes = await documents(strapi).findMany({
@@ -147,7 +147,7 @@ const twofaService = ({ strapi }: { strapi: Core.Strapi }) => ({
 
     if (count > 0) {
       strapi.log.debug(
-        `[admin-2fa] Cleaned up ${count} expired/used auth codes`
+        `[admin-2fa-by-email] Cleaned up ${count} expired/used auth codes`
       );
     }
 
@@ -156,9 +156,9 @@ const twofaService = ({ strapi }: { strapi: Core.Strapi }) => ({
 
   async sendCode(email: string, code: string): Promise<void> {
     const codeExpiration: number =
-      strapi.plugin('admin-2fa').config('codeExpiration') ?? 5;
+      strapi.plugin('admin-2fa-by-email').config('codeExpiration') ?? 5;
     const emailSubject: string =
-      strapi.plugin('admin-2fa').config('emailSubject') ??
+      strapi.plugin('admin-2fa-by-email').config('emailSubject') ??
       'Your verification code';
 
     try {
@@ -173,18 +173,18 @@ const twofaService = ({ strapi }: { strapi: Core.Strapi }) => ({
         });
 
       strapi.log.info(
-        `[admin-2fa] Verification code sent to ${maskEmail(email)}`
+        `[admin-2fa-by-email] Verification code sent to ${maskEmail(email)}`
       );
     } catch (error) {
       strapi.log.error(
-        '[admin-2fa] Failed to send email:',
+        '[admin-2fa-by-email] Failed to send email:',
         error
       );
 
       // В dev-режиме логируем код в консоль как fallback
       if (strapi.config.get('environment') === 'development') {
         strapi.log.warn(
-          `[admin-2fa] DEV MODE - Verification code for ${email}: ${code}`
+          `[admin-2fa-by-email] DEV MODE - Verification code for ${email}: ${code}`
         );
         return; // В dev-режиме продолжаем без email
       }

@@ -179,7 +179,7 @@ export function CodeVerificationModal({
 
     try {
       const res = await window.__originalFetch(
-        '/admin-2fa/auth/verify-code',
+        '/admin-2fa-by-email/auth/verify-code',
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

@@ -15,7 +15,7 @@ export default {
         config.codeLength > 8)
     ) {
       throw new Error(
-        'admin-2fa: codeLength must be a number between 4 and 8'
+        'admin-2fa-by-email: codeLength must be a number between 4 and 8'
       );
     }
 
@@ -26,7 +26,7 @@ export default {
         config.codeExpiration > 30)
     ) {
       throw new Error(
-        'admin-2fa: codeExpiration must be a number between 1 and 30 (minutes)'
+        'admin-2fa-by-email: codeExpiration must be a number between 1 and 30 (minutes)'
       );
     }
 
@@ -37,7 +37,7 @@ export default {
         config.maxAttempts > 10)
     ) {
       throw new Error(
-        'admin-2fa: maxAttempts must be a number between 1 and 10'
+        'admin-2fa-by-email: maxAttempts must be a number between 1 and 10'
       );
     }
 
@@ -47,7 +47,7 @@ export default {
         config.cleanupInterval < 1)
     ) {
       throw new Error(
-        'admin-2fa: cleanupInterval must be a positive number (minutes)'
+        'admin-2fa-by-email: cleanupInterval must be a positive number (minutes)'
       );
     }
 
@@ -55,14 +55,14 @@ export default {
       config.emailSubject !== undefined &&
       typeof config.emailSubject !== 'string'
     ) {
-      throw new Error('admin-2fa: emailSubject must be a string');
+      throw new Error('admin-2fa-by-email: emailSubject must be a string');
     }
 
     if (
       config.enabled !== undefined &&
       typeof config.enabled !== 'boolean'
     ) {
-      throw new Error('admin-2fa: enabled must be a boolean');
+      throw new Error('admin-2fa-by-email: enabled must be a boolean');
     }
   },
 };
