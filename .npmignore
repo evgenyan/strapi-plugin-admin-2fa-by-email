@@ -1,0 +1,10 @@
+admin/src/
+server/src/
+tsconfig.json
+.editorconfig
+.eslintrc*
+.prettierrc*
+.gitignore
+node_modules/
+.yarn/
+*.log

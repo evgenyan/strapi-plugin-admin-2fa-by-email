@@ -1,0 +1,17 @@
+{
+  "plugin.displayName": "Админ 2FA",
+  "plugin.description": "Двухфакторная аутентификация для админ-панели",
+  "auth.loginWithCode": "Вход с кодом подтверждения",
+  "auth.enterCode": "Введите код подтверждения",
+  "auth.codeSent": "Код подтверждения отправлен на вашу почту",
+  "auth.codeSentTo": "Код подтверждения отправлен на {email}",
+  "auth.verifyCode": "Подтвердить",
+  "auth.cancel": "Отмена",
+  "auth.codeExpired": "Срок действия кода истёк, запросите новый",
+  "auth.invalidCode": "Неверный код подтверждения",
+  "auth.tooManyAttempts": "Слишком много попыток, запросите новый код",
+  "auth.requestNewCode": "Отправить код повторно",
+  "auth.resendIn": "Повторная отправка через {seconds}с",
+  "auth.networkError": "Ошибка сети, попробуйте ещё раз",
+  "auth.sessionExpired": "Сессия истекла, войдите заново"
+}

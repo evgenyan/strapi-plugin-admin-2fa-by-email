@@ -1,0 +1,43 @@
+{
+  "kind": "collectionType",
+  "collectionName": "admin_2fa_auth_codes",
+  "info": {
+    "singularName": "auth-code",
+    "pluralName": "auth-codes",
+    "displayName": "2FA Auth Code"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {
+    "content-manager": { "visible": false },
+    "content-type-builder": { "visible": false }
+  },
+  "attributes": {
+    "userId": {
+      "type": "integer",
+      "required": true
+    },
+    "email": {
+      "type": "email",
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "maxLength": 8,
+      "required": true
+    },
+    "expiresAt": {
+      "type": "datetime",
+      "required": true
+    },
+    "isUsed": {
+      "type": "boolean",
+      "default": false
+    },
+    "attempts": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

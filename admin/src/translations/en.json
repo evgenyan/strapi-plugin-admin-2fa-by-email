@@ -1,0 +1,17 @@
+{
+  "plugin.displayName": "Admin 2FA",
+  "plugin.description": "Two-factor authentication for admin panel",
+  "auth.loginWithCode": "Login with verification code",
+  "auth.enterCode": "Enter verification code",
+  "auth.codeSent": "Verification code sent to your email",
+  "auth.codeSentTo": "A verification code has been sent to {email}",
+  "auth.verifyCode": "Verify Code",
+  "auth.cancel": "Cancel",
+  "auth.codeExpired": "Code expired, please request a new one",
+  "auth.invalidCode": "Invalid verification code",
+  "auth.tooManyAttempts": "Too many attempts, please request a new code",
+  "auth.requestNewCode": "Resend Code",
+  "auth.resendIn": "Resend available in {seconds}s",
+  "auth.networkError": "Network error, please try again",
+  "auth.sessionExpired": "Session expired, please login again"
+}
