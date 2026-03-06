@@ -27,6 +27,7 @@
   },
   "files": [
     "dist",
+    "docs",
     "strapi-admin.js",
     "strapi-server.js"
   ],

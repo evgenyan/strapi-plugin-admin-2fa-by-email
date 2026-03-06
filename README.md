@@ -2,6 +2,12 @@
 
 Two-factor email authentication for Strapi 5 admin panel.
 
+## Screenshots
+
+| Dark theme | Light theme |
+|:---:|:---:|
+| ![Dark theme](docs/screenshot-dark.png) | ![Light theme](docs/screenshot-light.png) |
+
 ## Features
 
 - Email-based two-factor authentication for admin login
